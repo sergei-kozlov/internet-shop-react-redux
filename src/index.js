@@ -12,18 +12,22 @@ import {Provider} from 'react-redux';
 import createRootReducer from 'reducers';
 import routes from 'routes';
 
+import ErrorBoundary from 'components/error-boundary';
+
 const history = createBrowserHistory();
 const middleware = [thunk, routerMiddleware(history)];
 const store = createStore(
-  createRootReducer(history),
-  composeWithDevTools(applyMiddleware(...middleware))
+    createRootReducer(history),
+    composeWithDevTools(applyMiddleware(...middleware))
 );
 
 ReactDOM.render(
-  <Provider store={store}>
-    <ConnectedRouter history={history}>
-      {routes}
-    </ConnectedRouter>
-  </Provider>,
-  document.getElementById('root')
+    <Provider store={store}>
+        <ErrorBoundary>
+            <ConnectedRouter history={history}>
+                {routes}
+            </ConnectedRouter>
+        </ErrorBoundary>
+    </Provider>,
+    document.getElementById('root')
 );
