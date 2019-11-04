@@ -1,25 +1,12 @@
-import './main.css';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {createStore, applyMiddleware} from 'redux';
-import {createBrowserHistory} from 'history';
-import thunk from 'redux-thunk';
-import {routerMiddleware, ConnectedRouter} from 'connected-react-router';
-import {composeWithDevTools} from 'redux-devtools-extension';
+import {ConnectedRouter} from 'connected-react-router';
 import {Provider} from 'react-redux';
+import routes from './routes';
+import {history, store} from './store';
+import ErrorBoundary from './components/error-boundary';
 
-import createRootReducer from 'reducers';
-import routes from 'routes';
-
-import ErrorBoundary from 'components/error-boundary';
-
-const history = createBrowserHistory();
-const middleware = [thunk, routerMiddleware(history)];
-const store = createStore(
-    createRootReducer(history),
-    composeWithDevTools(applyMiddleware(...middleware))
-);
+import './main.css';
 
 ReactDOM.render(
     <Provider store={store}>
