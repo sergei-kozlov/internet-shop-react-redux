@@ -3,7 +3,7 @@ import './error-indicator.css';
 
 const ErrorIndicator  = () => {
     return (
-    <div>Error!</div>
+    <div>Error!!!</div>
     );
 };
 

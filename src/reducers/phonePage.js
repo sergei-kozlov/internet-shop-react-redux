@@ -16,7 +16,8 @@ export default (state = initialState, {type, payload}) => {
                 loading: R.prop('loading', payload),
                 error: R.prop('error', payload)
             });
+
         default:
-            return state
+            return state;
     }
 };

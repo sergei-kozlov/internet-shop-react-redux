@@ -1,18 +1,19 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 import * as R from 'ramda';
-import {Link} from 'react-router-dom';
 
 import {fetchPhoneById, addPhoneToBasket} from '../../actions';
 import {getPhoneById} from '../../selectors/selectors';
-import BasketCart from '../../components/basketCart';
 
 import Spinner from '../../components/spinner';
-import ErrorIndicator from '../../components/error-indicator';
+import ShopHeader from '../../components/shop-header';
 
 class Phone extends Component {
+
     componentDidMount() {
+
         const phoneId = this.props.match.params.id;
+
         this.props.fetchPhoneById(phoneId)
     }
 
@@ -32,8 +33,6 @@ class Phone extends Component {
             ])
         )(phone);
 
-        console.log('columns', columnField);
-
         return columnField.map(([key, value]) => (
             <div className='column' key={key}>
                 <div className='ab-details-title'>
@@ -48,16 +47,15 @@ class Phone extends Component {
 
     renderContent() {
         const {phone} = this.props;
+        const content =  <PhoneView phone={phone}/>;
 
         return (
             <div className='thumbnail'>
                 <div className='row'>
                     <div className='col-md-6'>
-                        <img
-                            className='img-thumbnail'
-                            src={phone.image}
-                            alt={phone.name}
-                        />
+                        <div className="img-thumbnail">
+                            {content}
+                        </div>
                     </div>
                     <div className='col-md-6'>
                         {this.renderField()}
@@ -77,15 +75,15 @@ class Phone extends Component {
 
         return (
             <div>
-                <p className='lead'>Quick shop</p>
-                <BasketCart/>
+                <p className='lead'>KWIK-E-MART</p>
+                {/*<BasketCart/>*/}
                 <div className='form-group'>
                     <h1>{phone.name}</h1>
                     <h2>${phone.price}</h2>
                 </div>
-                <Link to='/' className='btn btn-info btn-block'>
-                    Back to store
-                </Link>
+                {/*<Link to='/' className='btn btn-info btn-block'>*/}
+                {/*    Back to store*/}
+                {/*</Link>*/}
                 <button
                     type='button'
                     className='btn btn-success btn-block'
@@ -99,23 +97,19 @@ class Phone extends Component {
 
 
     render() {
+        const {loading} = this.props;
 
-        const {loading, error} = this.props;
+        const spinner = loading ? <Spinner /> : null;
 
-        if (loading) {
-            return <Spinner/>;
-        }
-
-        if (error) {
-            return <ErrorIndicator/>;
-        }
 
 
         return (
             <div className='view-container'>
                 <div className='container'>
                     <div className='row'>
+                        <ShopHeader />
                         <div className='col-md-9'>
+                            {spinner}
                             {this.props.phone && this.renderContent()}
                         </div>
                         <div className='col-md-3'>
@@ -128,10 +122,21 @@ class Phone extends Component {
     }
 }
 
+
+const PhoneView = ({phone}) => {
+    return (
+    <Fragment>
+        <img
+            src={phone.image}
+            alt={phone.name}
+        />
+    </Fragment>
+    );
+};
+
 const mapStateToProps = state => {
     return {
         loading: state.phonePage.loading,
-        error: state.phonePage.error,
         phone: getPhoneById(state, state.phonePage.id)
     }
 };

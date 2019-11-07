@@ -111,6 +111,9 @@ export const fetchCategories = () => async dispatch => {
     }
 };
 
+
+// Cart Actions
+
 export const removePhoneFromBasket = id => async dispatch => {
     dispatch({
         type: REMOVE_PHONE_FROM_BASKET,
@@ -127,3 +130,5 @@ export const cleanBasket = () => async dispatch => {
 export const basketCheckout = phones => () => {
     alert(JSON.stringify(phones))
 };
+
+// End of Cart Actions

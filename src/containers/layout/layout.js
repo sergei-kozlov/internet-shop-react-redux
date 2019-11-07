@@ -1,17 +1,17 @@
 import React from 'react'
 
 import Sidebar from '../../components/sidebar';
-import TopShopHeader from '../../components/top-shop-header';
 import ShopHeader from '../../components/shop-header';
+import ShopSearch from '../../components/shop-search';
+
 
 const Layout = ({children}) => (
     <div className='view-container'>
         <div className='container'>
             <div className='row'>
-                <TopShopHeader />
                 <ShopHeader />
+                <ShopSearch/>
                 <div className='col-md-3'>
-
                     <Sidebar />
                 </div>
                 <div className='col-md-9'>

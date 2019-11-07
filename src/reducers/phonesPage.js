@@ -8,7 +8,9 @@ import {
 
 const initialState = {
   ids: [],
-  search: ''
+  search: '',
+  loading: true,
+  error: false
 };
 
 export default (state = initialState, {type, payload}) => {
@@ -16,19 +18,25 @@ export default (state = initialState, {type, payload}) => {
     return {
       books: [],
       loading: true,
-      error: null
+      error: false
     };
   }
   switch (type) {
     case FETCH_PHONES_SUCCESS:
       return R.mergeRight(state, {
-        ids: R.pluck('id', payload)
+        ids: R.pluck('id', payload),
+        loading: R.prop('loading', payload),
+        error: R.prop('error', payload)
       });
+
     case LOAD_MORE_PHONES_SUCCESS:
       const ids = R.pluck('id', payload);
       return R.mergeRight(state, {
-        ids: R.concat(ids, state.ids)
+        ids: R.concat(ids, state.ids),
+        loading: R.prop('loading', payload),
+        error: R.prop('error', payload)
       });
+
     case SEARCH_PHONE:
       return R.mergeRight(state, {
         search: payload

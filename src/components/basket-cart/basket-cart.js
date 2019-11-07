@@ -12,7 +12,7 @@ const BasketCart = ({totalBasketCount, totalPrice}) => {
     <div className='cart'>
       <div className='dropdown'>
         <Link
-          to='/basket'
+          to='/cart'
           id='dLabel'
           className='btn btn-inverse btn-block btn-lg'
         >
