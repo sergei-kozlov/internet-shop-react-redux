@@ -6,12 +6,14 @@ import routes from './routes';
 import {history, store} from './store';
 import ErrorBoundary from './components/error-boundary';
 
-import './main.css';
+
+import ShopHeaderCart from "./components/shop-header/shop-header";
 
 ReactDOM.render(
     <Provider store={store}>
         <ErrorBoundary>
             <ConnectedRouter history={history}>
+                <ShopHeaderCart/>
                 {routes}
             </ConnectedRouter>
         </ErrorBoundary>

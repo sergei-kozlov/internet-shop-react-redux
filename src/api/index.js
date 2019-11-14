@@ -15,10 +15,12 @@ export const fetchPhones = async () => {
 };
 
 
-
+//Imitation server works delay 700 ms.
 export const loadMorePhones = async ({offset}) => {
     return new Promise(resolve => {
+        setTimeout(() => {
         resolve(phones)
+    }, 700);
     })
 };
 

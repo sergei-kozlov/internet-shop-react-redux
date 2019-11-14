@@ -1,3 +1,3 @@
-import Search from './shop-header-search';
+import Search  from './shop-search';
 
 export default Search;

@@ -1,12 +1,14 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import * as R from 'ramda';
-import {Link} from 'react-router-dom';
+
 
 import {
     removePhoneFromBasket,
     basketCheckout,
-    cleanBasket
+    cleanBasket,
+    addPhoneToBasket,
+    removeAllPhonesFromBasket
 } from '../../actions';
 
 import {
@@ -14,42 +16,72 @@ import {
     getTotalBasketPrice
 } from '../../selectors/selectors';
 
+import './basket.css'
+
 const Basket = ({
                     phones,
                     totalPrice,
                     removePhoneFromBasket,
                     basketCheckout,
-                    cleanBasket
+                    cleanBasket,
+                    addPhoneToBasket,
+                    removeAllPhonesFromBasket
                 }) => {
     const isBasketEmpty = R.isEmpty(phones);
     const renderContent = () => {
         return (
             <div>
-                {isBasketEmpty && <div>Your shopping cart is empty</div>}
-
                 <div className='table-responsive'>
-                    <table className='table-bordered table-striped table-condensed cf'>
+                    <table className='table-bordered table-striped table-confidence table-cart'>
+                        <thead>
+                        <tr>
+                            <th scope="col">Item Image</th>
+                            <th scope="col">Item Description</th>
+                            <th scope="col">Item Price</th>
+                            <th scope="col">Item Count</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                        </thead>
+
                         <tbody>
                         {phones.map((phone, index) => (
                             <tr
                                 key={index}
-                                className='item-checout'
+                                className='item-checkout'
                             >
-                                <td className='first-column-checkout'>
+                                <td className="first-column-checkout">
                                     <img
-                                        className='img-thumbnail'
+                                        className="rounded img-fluid img-size"
                                         src={phone.image}
                                         alt={phone.name}
                                     />
                                 </td>
+
                                 <td>{phone.name}</td>
                                 <td>${phone.price}</td>
                                 <td>{phone.count}</td>
                                 <td>
-                  <span
-                      onClick={() => removePhoneFromBasket(phone.id)}
-                      className='delete-cart'
-                  />
+
+
+                                    <button
+                                        onClick={() => addPhoneToBasket(phone.id)}
+                                        className="btn btn-outline-success btn-table-size">
+                                        <i className="fa fa-plus-circle"/>
+                                    </button>
+
+                                    <button
+                                        onClick={() => removePhoneFromBasket(phone.id)}
+                                        className="btn btn-outline-warning btn-table-size">
+                                        <i className="fa fa-minus-circle"/>
+                                    </button>
+
+                                    <button
+                                        onClick={() => removeAllPhonesFromBasket(phone.id)}
+                                        className="btn btn-outline-danger btn-table-size">
+                                        <i className="fa fa-trash-o"/>
+                                    </button>
+
+
                                 </td>
                             </tr>
                         ))}
@@ -58,37 +90,33 @@ const Basket = ({
                 </div>
                 {
                     R.not(isBasketEmpty) &&
-                    <div className='row'>
-                        <div className='pull-right total-user-checkout'>
-                            <b>Total:</b>
-                            ${totalPrice}
-                        </div>
+
+                    <div className="total-user-checkout">
+                        <b>Total Price: </b>
+                        ${totalPrice}
                     </div>
+
                 }
+                {isBasketEmpty && <div>Your shopping cart is empty</div>}
             </div>
+
         )
     };
     const renderSidebar = () => (
         <div>
-            <Link
-                className='btn btn-info'
-                to='/'
-            >
-                <span className='glyphicon glyphicon-info-sign'/>
-                <span>Continue shopping!</span>
-            </Link>
+
             {
                 R.not(isBasketEmpty) &&
                 <div>
                     <button
                         onClick={cleanBasket}
-                        className='btn btn-danger'
+                        className='btn btn-danger btn-size'
                     >
                         <span className='glyphicon glyphicon-trash'/>
-                        Clear cart
+                        Delete all Items
                     </button>
                     <button
-                        className='btn btn-success'
+                        className='btn btn-success btn-size'
                         onClick={() => basketCheckout(phones)}
                     >
                         <span className='glyphicon glyphicon-envelope'/>
@@ -100,7 +128,7 @@ const Basket = ({
     );
 
     return (
-        <div className='view-container'>
+        <div className='view-container main'>
             <div className='container'>
                 <div className='row'>
                     <div className='col-md-9'>
@@ -126,7 +154,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
     removePhoneFromBasket,
     cleanBasket,
-    basketCheckout
+    basketCheckout,
+    addPhoneToBasket,
+    removeAllPhonesFromBasket
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Basket);

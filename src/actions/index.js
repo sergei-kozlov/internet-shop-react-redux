@@ -14,7 +14,8 @@ import {
     FETCH_CATEGORIES_START,
     FETCH_CATEGORIES_SUCCESS,
     REMOVE_PHONE_FROM_BASKET,
-    CLEAN_BASKET
+    CLEAN_BASKET,
+    REMOVE_ALL_PHONES_FROM_BASKET
 } from '../actionTypes';
 import {
     fetchPhones as fetchPhonesApi,
@@ -79,12 +80,6 @@ export const fetchPhoneById = (id) => async dispatch => {
     }
 };
 
-export const addPhoneToBasket = id => dispatch => {
-    dispatch({
-        type: ADD_PHONE_TO_BASKET,
-        payload: id
-    })
-};
 
 export const searchPhone = text => dispatch => {
     dispatch({
@@ -114,10 +109,17 @@ export const fetchCategories = () => async dispatch => {
 
 // Cart Actions
 
-export const removePhoneFromBasket = id => async dispatch => {
-    dispatch({
-        type: REMOVE_PHONE_FROM_BASKET,
+export const addPhoneToBasket = id => {
+    return({
+        type: ADD_PHONE_TO_BASKET,
         payload: id
+    })
+};
+
+export const removePhoneFromBasket = name => {
+    return({
+        type: REMOVE_PHONE_FROM_BASKET,
+        payload: name
     })
 };
 
@@ -129,6 +131,19 @@ export const cleanBasket = () => async dispatch => {
 
 export const basketCheckout = phones => () => {
     alert(JSON.stringify(phones))
+
 };
+
+
+//New Actions of basket
+
+export const removeAllPhonesFromBasket = id => {
+   return({
+        type: REMOVE_ALL_PHONES_FROM_BASKET,
+        payload: id
+    })
+};
+
+//End of New Actions
 
 // End of Cart Actions

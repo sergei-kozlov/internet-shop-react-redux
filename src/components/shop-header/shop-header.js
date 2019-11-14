@@ -12,14 +12,14 @@ import Logo from "./images/kwik-e-mart_cr_small.png";
 const ShopHeaderCart = ({totalBasketCount, totalPrice}) => {
 
     return (
-        <header>
-            <div id="top-header">
+        <header >
+            <div id="top-header" >
 
                 <div className="container">
 
                     <div className="pull-left">
                         <div className="header-logo">
-                            <Link to='./' className="logo" exact>
+                            <Link to='/' className="logo" exact>
                                 <img src={Logo} alt="Welcome to KWIK-E-MART"/>
                             </Link>
                         </div>
@@ -28,11 +28,16 @@ const ShopHeaderCart = ({totalBasketCount, totalPrice}) => {
                     <div className="pull-right">
                         <ul className="header-top-links">
                             <li><Link to='/store'>Store</Link></li>
-                            <li><Link to='./Newsletter'>Newsletter</Link></li>
+                            <li><Link to='./newsletter'>Newsletter</Link></li>
                             <li><Link to='/faq'>FAQ</Link></li>
-                            <li><Link to='/login' className="text-uppercase">Login</Link>
+                            <li>
+                                <Link to='/login' className="text-uppercase">Login</Link>
                                 /
-                                <Link to='/join' className="text-uppercase">Join</Link></li>
+                                <Link to='/join' className="text-uppercase">Join</Link>
+
+
+                            </li>
+
                             <li>
                                 <Link to='/cart'>
                                 <span className="header-btns-icon">
@@ -49,12 +54,9 @@ const ShopHeaderCart = ({totalBasketCount, totalPrice}) => {
                     </div>
                 </div>
             </div>
-
         </header>
-
     );
 };
-
 
 const mapStateToProps = state => {
     return {
@@ -62,7 +64,6 @@ const mapStateToProps = state => {
         totalPrice: getTotalBasketPrice(state)
     };
 };
-
 
 export default connect(mapStateToProps, null)(ShopHeaderCart);
 

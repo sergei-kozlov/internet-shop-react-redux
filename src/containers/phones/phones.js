@@ -16,6 +16,8 @@ import Layout from '../layout';
 import Spinner from "../../components/spinner";
 import ErrorIndicator from "../../components/error-indicator";
 
+import './phones.css';
+
 
 class Phones extends Component {
     componentDidMount() {
@@ -25,41 +27,43 @@ class Phones extends Component {
 
     renderPhone(phone, index) {
         const {addPhoneToBasket} = this.props;
-        const shortDescription = `${R.take(60, phone.description)}...`;
+        const shortDescription = `${R.take(30, phone.description)}...`;
 
         return (
-            <div className='col-sm-4 col-lg-4 col-md-4 book-list' key={index}>
+
+            <div className="col-sm-4" key={index}>
+
                 <div className='thumbnail'>
                     <img
-                        className='img-thumbnail'
+                        className="img-thumbnail img-fluid figure-img"
                         src={phone.image}
                         alt={phone.name}
                     />
-                    <div className='caption'>
-                        <h4 className='pull-right'>${phone.price}</h4>
-                        <h4>
+                    <div className="figure-caption">
+                        <h6 className="pull-right">${phone.price}</h6>
+                        <h5>
                             <Link to={`/phones/${phone.id}`}>
                                 {phone.name}
                             </Link>
-                        </h4>
+                        </h5>
                         <p>{shortDescription}</p>
-                        <p className='itemButton'>
-                            <button
-                                className='btn btn-primary'
-                                onClick={() => addPhoneToBasket(phone.id)}
-                            >
+                        <span>
+                            <button type="button" className="btn btn-primary btn-buy-size"
+                                    onClick={() => addPhoneToBasket(phone.id)}>
                                 Buy Now!
                             </button>
-                            <Link
-                                to={`/phones/${phone.id}`}
-                                className='btn btn-default'
-                            >
-                                More info
+
+
+                            <Link to={`/phones/${phone.id}`}>
+                                <button className='btn btn-secondary btn-info-size pull-right'>
+                                    More info
+                                </button>
                             </Link>
-                        </p>
+                        </span>
                     </div>
                 </div>
             </div>
+
         )
     }
 
@@ -78,18 +82,16 @@ class Phones extends Component {
         const {phones, loadMorePhones} = this.props;
         return (
             <Layout>
-                <div className='books row'>
+                <div className="row books">
                     {phones.map((phone, index) => this.renderPhone(phone, index))}
                 </div>
-                <div className='row'>
-                    <div className='col-md-12'>
-                        <button
+
+                <div>
+                    <button type="button" className="btn btn-secondary btn-load-more-size btn-block"
                             onClick={loadMorePhones}
-                            className='pull-right btn btn-primary'
-                        >
-                            Load More
-                        </button>
-                    </div>
+                    >
+                        Load More
+                    </button>
                 </div>
             </Layout>
         )

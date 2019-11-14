@@ -1,12 +1,14 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 import * as R from 'ramda';
+import {Link} from 'react-router-dom';
 
 import {fetchPhoneById, addPhoneToBasket} from '../../actions';
 import {getPhoneById} from '../../selectors/selectors';
-
 import Spinner from '../../components/spinner';
-import ShopHeader from '../../components/shop-header';
+//
+import './phone.css'
+
 
 class Phone extends Component {
 
@@ -34,39 +36,39 @@ class Phone extends Component {
         )(phone);
 
         return columnField.map(([key, value]) => (
-            <div className='column' key={key}>
-                <div className='ab-details-title'>
-                    <p>{key}</p>
+                <div className='parent' key={key}>
+
+                    <div className="pull-left">
+                            <b> {key}: &nbsp; </b>
+                    </div>
+                    <div className="pull-left">
+                        {value}
+                    </div>
                 </div>
-                <div className='ab-details-info'>
-                    {value}
-                </div>
-            </div>
-        ))
+            )
+        )
     }
 
     renderContent() {
         const {phone} = this.props;
-        const content =  <PhoneView phone={phone}/>;
+        const content = <PhoneImageView phone={phone}/>;
 
         return (
-            <div className='thumbnail'>
-                <div className='row'>
-                    <div className='col-md-6'>
-                        <div className="img-thumbnail">
-                            {content}
-                        </div>
-                    </div>
-                    <div className='col-md-6'>
-                        {this.renderField()}
-                    </div>
+
+
+            <div className="thumbnail">
+                <div className="img-thumbnail float-img">
+                    {content}
                 </div>
+
                 <div className='caption-full'>
                     <h4 className='pull-right'>${phone.price}</h4>
                     <h4>{phone.name}</h4>
                     <p>{phone.description}</p>
                 </div>
+
             </div>
+
         )
     }
 
@@ -75,18 +77,18 @@ class Phone extends Component {
 
         return (
             <div>
-                <p className='lead'>KWIK-E-MART</p>
-                {/*<BasketCart/>*/}
+                <span className='lead logo'>KWIK-E-MART</span>
+
                 <div className='form-group'>
-                    <h1>{phone.name}</h1>
-                    <h2>${phone.price}</h2>
+                    <h4>{phone.name}</h4>
+                    <h4>${phone.price}</h4>
                 </div>
-                {/*<Link to='/' className='btn btn-info btn-block'>*/}
-                {/*    Back to store*/}
-                {/*</Link>*/}
+                <Link to='/' className='btn btn-secondary btn-block btn-height'>
+                    Back to store
+                </Link>
                 <button
                     type='button'
-                    className='btn btn-success btn-block'
+                    className='btn btn-primary btn-block btn-height'
                     onClick={() => addPhoneToBasket(phone.id)}
                 >
                     Add to cart
@@ -99,20 +101,22 @@ class Phone extends Component {
     render() {
         const {loading} = this.props;
 
-        const spinner = loading ? <Spinner /> : null;
-
+        const spinner = loading ? <Spinner/> : null;
 
 
         return (
             <div className='view-container'>
                 <div className='container'>
                     <div className='row'>
-                        <ShopHeader />
-                        <div className='col-md-9'>
+                        <div className='col-sm-4'>
                             {spinner}
                             {this.props.phone && this.renderContent()}
                         </div>
-                        <div className='col-md-3'>
+                        <div className="col-sm-5">
+                            {this.props.phone && this.renderField()}
+
+                        </div>
+                        <div className='col-sm-3'>
                             {this.props.phone && this.renderSidebar()}
                         </div>
                     </div>
@@ -123,14 +127,14 @@ class Phone extends Component {
 }
 
 
-const PhoneView = ({phone}) => {
+const PhoneImageView = ({phone}) => {
     return (
-    <Fragment>
-        <img
-            src={phone.image}
-            alt={phone.name}
-        />
-    </Fragment>
+        <Fragment>
+            <img
+                src={phone.image}
+                alt={phone.name}
+            />
+        </Fragment>
     );
 };
 
