@@ -66,7 +66,7 @@ export default [
     {
         id: '5',
         categoryId: '3',
-        name: 'HTC One',
+        name: 'Htc One',
         description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ultricies lorem odio, at laoreet tellus sodales in. Nullam maximus eros ut tortor ultricies rutrum. Aliquam euismod lacus non est egesta',
         price: 674,
