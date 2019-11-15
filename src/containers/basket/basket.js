@@ -17,6 +17,7 @@ import {
 } from '../../selectors/selectors';
 
 import './basket.css'
+import {Link} from "react-router-dom";
 
 const Basket = ({
                     phones,
@@ -69,11 +70,12 @@ const Basket = ({
                                         <i className="fa fa-plus-circle"/>
                                     </button>
 
-                                    <button
-                                        onClick={() => removePhoneFromBasket(phone.id)}
-                                        className="btn btn-outline-warning btn-table-size">
-                                        <i className="fa fa-minus-circle"/>
-                                    </button>
+                                    <Link to={`/phones/${phone.id}`}>
+                                        <button className='btn btn-secondary btn-table-sizet'>
+                                            <i className="fa fa-info-circle"/>
+
+                                        </button>
+                                    </Link>
 
                                     <button
                                         onClick={() => removeAllPhonesFromBasket(phone.id)}
@@ -110,13 +112,13 @@ const Basket = ({
                 <div>
                     <button
                         onClick={cleanBasket}
-                        className='btn btn-danger btn-size'
+                        className='btn btn-danger btn-size btn-block'
                     >
                         <span className='glyphicon glyphicon-trash'/>
                         Delete all Items
                     </button>
                     <button
-                        className='btn btn-success btn-size'
+                        className='btn btn-success btn-size btn-block'
                         onClick={() => basketCheckout(phones)}
                     >
                         <span className='glyphicon glyphicon-envelope'/>
